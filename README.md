@@ -26,6 +26,10 @@ Build the whole project with `./gradlew build`.
 - [/shared](./shared) holds the code shared across the applications. [src/commonMain](./shared/src/commonMain)
   is for common code; the sibling `src/<platform>Main` folders (for example `src/androidMain`) hold
   code compiled only for that platform.
+- Shared layers: `model/` holds data classes, `data/` holds the `BoxRepo` interface and `YamlBoxRepo`, and
+  `viewmodel/` holds ViewModels that drive all UI. Per-tab ViewModels are separate per screen. The prototype's
+  data comes from [yaml](./shared/src/commonMain/yaml) files, bundled into Kotlin at build time. A real
+  implementation would replace `YamlBoxRepo` with a network-backed repo.
 - The JS target exports TypeScript definitions for use in React apps. Build them with
   `./gradlew :shared:jsBrowserProductionLibrary`, which writes
   `shared/build/dist/js/productionLibrary/Box-shared.d.ts`.
