@@ -1,0 +1,36 @@
+# OS
+.DS_Store
+
+# Gradle and Kotlin
+.gradle/
+build/
+.kotlin/
+kotlin-js-store/
+local.properties
+*.hprof
+
+# Android
+captures/
+.cxx/
+.externalNativeBuild/
+
+# IntelliJ / Android Studio: track only shared run configurations
+.idea/*
+!.idea/.gitignore
+!.idea/runConfigurations/
+*.iml
+
+# Xcode / Apple
+xcuserdata/
+*.xcuserstate
+DerivedData/
+.build/
+.swiftpm/
+Pods/
+
+# Node / React web app
+node_modules/
+webApp/dist/
+*.tsbuildinfo
+npm-debug.log*
+
