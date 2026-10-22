@@ -1,0 +1,28 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; }
+.app { display: flex; height: 100vh; }
+.rail { width: 240px; flex-shrink: 0; display: flex; flex-direction: column; gap: 4px; padding: 20px 12px; background: #0061d5; color: #fff; }
+.brand { font-size: 28px; font-weight: 700; padding: 4px 12px 20px; letter-spacing: -0.5px; }
+.rail-item { display: flex; flex-direction: row; align-items: center; gap: 12px; padding: 10px 12px; border: none; border-radius: 8px; background: transparent; cursor: pointer; font: inherit; font-size: 15px; color: #fff; text-align: left; }
+.rail-item img { filter: brightness(0) invert(1); }
+.rail-item:hover { background: rgba(255, 255, 255, 0.12); }
+.rail-item.selected { background: #004ba8; font-weight: 600; }
+.content { flex: 1; padding: 24px 32px; overflow-y: auto; background: #fff; min-width: 0; }
+.search { display: flex; align-items: center; gap: 12px; max-width: 520px; padding: 10px 16px; border: 1px solid #ccc; border-radius: 24px; margin-bottom: 28px; }
+.search input { flex: 1; border: none; outline: none; font: inherit; font-size: 15px; background: transparent; }
+.title { margin: 0 0 16px; font-size: 28px; font-weight: 600; }
+.section-title { margin: 0 0 12px; font-size: 16px; font-weight: 600; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin-bottom: 32px; }
+.card { border: 1px solid #e3e3e3; border-radius: 12px; overflow: hidden; background: #fff; }
+.card-thumb { height: 120px; display: flex; align-items: center; justify-content: center; font-size: 40px; background: #f5f5f5; }
+.card-name { padding: 10px 12px 2px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card .meta { padding: 0 12px 10px; }
+.files-table { width: 100%; border-collapse: collapse; }
+.files-table th { text-align: left; font-size: 13px; font-weight: 600; color: #555; padding: 8px 12px; border-bottom: 1px solid #ddd; }
+.files-table td { padding: 12px; border-bottom: 1px solid #eee; }
+.list { list-style: none; margin: 0; padding: 0; }
+.row { display: flex; flex-direction: column; padding: 12px 0; border-bottom: 1px solid #eee; }
+.files-table th:nth-child(2), .files-table td:nth-child(2) { width: 220px; }
+.files-table th:nth-child(3), .files-table td:nth-child(3) { width: 120px; }
+.name { font-weight: 500; }
+.meta { color: #666; font-size: 14px; }
