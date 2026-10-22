@@ -9,6 +9,7 @@ Build the whole project with `./gradlew build`.
 
 ## Modules
 
+- [/androidApp](./androidApp) contains the Android application. Run it with `./gradlew :androidApp:installDebug`.
 - [/shared](./shared) holds the code shared across the applications. [src/commonMain](./shared/src/commonMain)
   is for common code; the sibling `src/<platform>Main` folders (for example `src/androidMain`) hold
   code compiled only for that platform.
