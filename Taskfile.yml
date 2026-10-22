@@ -1,0 +1,57 @@
+version: '3'
+
+vars:
+  XCODE_PROJECT: iosApp/iosApp.xcodeproj
+  XCODE_DERIVED_DATA: build/xcode
+  IOS_BUNDLE_ID: com.chimbori.box.Box
+  ANDROID_ACTIVITY: com.chimbori.box/.MainActivity
+  # One lock shared by every task that runs Gradle (directly or via Xcode), so Gradle builds never run concurrently.
+  GRADLE_LOCK: /tmp/box-gradle.lock
+
+tasks:
+  android:
+    desc: Build, install, and launch the Android app on a connected device or emulator
+    cmds:
+      - lockf -k {{.GRADLE_LOCK}} ./gradlew --console=plain -q :androidApp:installDebug
+      - adb shell am start -n {{.ANDROID_ACTIVITY}}
+
+  ios:
+    desc: Build and launch the iOS app in the iOS Simulator
+    cmds:
+      - open -a Simulator 2>/dev/null || true
+      - xcrun simctl boot booted 2>/dev/null || true
+      - >-
+        lockf -k {{.GRADLE_LOCK}} xcodebuild -project {{.XCODE_PROJECT}} -scheme iosApp
+        -sdk iphonesimulator -configuration Debug
+        -derivedDataPath {{.XCODE_DERIVED_DATA}}/ios build
+      - xcrun simctl install booted {{.XCODE_DERIVED_DATA}}/ios/Build/Products/Debug-iphonesimulator/Box.app
+      - xcrun simctl launch booted {{.IOS_BUNDLE_ID}}
+
+  macos:
+    desc: Build and launch the macOS app
+    cmds:
+      - >-
+        lockf -k {{.GRADLE_LOCK}} xcodebuild -project {{.XCODE_PROJECT}} -scheme BoxMac
+        -configuration Debug -derivedDataPath {{.XCODE_DERIVED_DATA}}/macos build
+      - open "$(find {{.XCODE_DERIVED_DATA}}/macos/Build/Products/Debug -maxdepth 1 -name '*.app' | head -n 1)"
+
+  web:
+    desc: Start the React web app dev server (builds the shared JS library first)
+    cmds:
+      # Gradle runs only for the JS build, then the lock is released before the long-running dev server starts.
+      - lockf -k {{.GRADLE_LOCK}} ./gradlew --console=plain -q npmInstallWeb
+      - npm --prefix webApp run dev
+
+  apple:
+    desc: Build and launch both the iOS and macOS apps in parallel
+    deps:
+      - ios
+      - macos
+
+  preview:
+    desc: Launch Android and Apple (iOS and macOS) in parallel, then start the web dev server last
+    deps:
+      - android
+      - apple
+    cmds:
+      - task: web

@@ -6,14 +6,19 @@ plugins {
 
 val webAppDir = layout.projectDirectory.dir("webApp")
 
+// Gradle does not always inherit the shell PATH, so Homebrew's npm may be missing.
+val webPath = listOf("/opt/homebrew/bin", "/usr/local/bin", System.getenv("PATH") ?: "").joinToString(":")
+
 val npmInstallWeb by tasks.registering(Exec::class) {
   dependsOn(":shared:jsBrowserProductionLibraryDistribution")
   workingDir(webAppDir)
+  environment("PATH", webPath)
   commandLine("npm", "install")
 }
 
 tasks.register<Exec>("webDev") {
   dependsOn(npmInstallWeb)
   workingDir(webAppDir)
+  environment("PATH", webPath)
   commandLine("npm", "run", "dev")
 }
