@@ -1,0 +1,10 @@
+tabs:
+  - id: files
+    title: Files
+    icon: files
+  - id: notes
+    title: Notes
+    icon: notes
+  - id: collections
+    title: Collections
+    icon: collections

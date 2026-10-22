@@ -1,0 +1,10 @@
+collections:
+  - name: Work
+    description: Client projects and documents
+    itemCount: 42
+  - name: Travel
+    description: Trip plans, tickets, and photos
+    itemCount: 118
+  - name: Receipts
+    description: Scanned receipts for expenses
+    itemCount: 37
