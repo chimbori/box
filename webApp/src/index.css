@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@layer components {
+  .rail-item {
+    @apply flex flex-row items-center gap-3 rounded-lg border-none bg-transparent px-3 py-2.5 text-left font-[inherit] text-[15px] text-white cursor-pointer hover:bg-white/10 max-[599px]:relative max-[599px]:justify-center max-[599px]:p-2.5 max-[299px]:min-w-0 max-[299px]:flex-1;
+  }
+  .rail-item-selected {
+    @apply bg-[#004ba8] font-semibold;
+  }
+  .meta {
+    @apply text-sm text-[#666];
+  }
+  .name {
+    @apply font-medium;
+  }
+  .list-row {
+    @apply flex flex-col border-b border-[#eee] py-3;
+  }
+  .table-th {
+    @apply border-b border-[#ddd] px-3 py-2 text-left text-[13px] font-semibold text-[#555];
+  }
+  .table-td {
+    @apply border-b border-[#eee] p-3;
+  }
+}
