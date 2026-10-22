@@ -2,10 +2,32 @@
 
 Kotlin Multiplatform project with shared code for Android, iOS, macOS, and the web.
 
-The root `settings.gradle.kts` and `build.gradle.kts` are the Gradle build entry points, and the
-project uses the Gradle wrapper (`./gradlew`), so no separate Gradle install is needed.
+## Screenshots
 
-Build the whole project with `./gradlew build`.
+All widgets are platform native: SwiftUI on iOS and macOS, Jetpack Compose on Android, and React on the web. The shared layer supplies only state and actions, so each platform renders its own widgets. The iOS video below shows the native Liquid Glass look as proof.
+
+<video src="docs/video-ios-liquid-glass.mp4" controls width="320"></video>
+
+| Android | iOS | Web |
+|---------|-----|-----|
+| <img src="docs/screenshot-android.png" width="220" alt="Android app"><br>The Android app on Material 3 Expressive, with native Compose cards and the bottom navigation bar. | <img src="docs/screenshot-ios.png" width="220" alt="iOS app"><br>The iOS app with a native SwiftUI list and the Liquid Glass tab bar. | <img src="docs/screenshot-web.png" width="260" alt="Web app"><br>The web app in a browser, with the blue sidebar on the left, Recents cards, and a file table. |
+
+| Android | iOS | Web |
+|---------|-----|-----|
+| <img src="docs/source-tree-android.png" width="260" alt="Android source tree"><br>The Android app's Kotlin sources, with Compose screens and the Sections theme under `theme/`. | <img src="docs/source-tree-ios.png" width="260" alt="iOS source tree"><br>The iOS app's SwiftUI sources under `iosApp/`, which bind to the shared ViewModels. | <img src="docs/source-tree-web.png" width="260" alt="Web source tree"><br>The React web app under `webApp/`, which uses the shared JS library and Tailwind for styling. |
+
+## Architecture
+
+<img src="docs/shared-view-models.png" alt="Shared ViewModels">
+
+The ViewModels in `shared/` hold all UI state and logic, and every platform binds to them.
+Each top-level tab (Files, Notes, Collections) has its own ViewModel, since their code is largely independent,
+and the bottom tab list itself comes from a shared Repo and ViewModel.
+
+All ViewModels read their data from the Repo layer in `shared/`. For this prototype, the Repo loads
+hard-coded YAML files from `shared/src/commonMain/yaml/` (`tabs`, `files`, `notes`, `collections`).
+In a real implementation, this layer would be replaced by a shared network client that fetches the same data at runtime.
+The UI layer on each platform stays thin: SwiftUI on iOS and macOS, Jetpack Compose on Android, and React on Web.
 
 ## Running
 
@@ -17,6 +39,11 @@ Build the whole project with `./gradlew build`.
 - `task apple`: run `ios` and `macos` in parallel.
 - `task web`: start the web dev server.
 - `task preview`: run Android and Apple in parallel, then start the web dev server last so it keeps running.
+
+The root `settings.gradle.kts` and `build.gradle.kts` are the Gradle build entry points, and the
+project uses the Gradle wrapper (`./gradlew`), so no separate Gradle install is needed.
+
+Build the whole project with `./gradlew build`.
 
 ## Modules
 
