@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Box"
+
+include(":shared")

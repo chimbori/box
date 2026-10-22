@@ -6,3 +6,12 @@ The root `settings.gradle.kts` and `build.gradle.kts` are the Gradle build entry
 project uses the Gradle wrapper (`./gradlew`), so no separate Gradle install is needed.
 
 Build the whole project with `./gradlew build`.
+
+## Modules
+
+- [/shared](./shared) holds the code shared across the applications. [src/commonMain](./shared/src/commonMain)
+  is for common code; the sibling `src/<platform>Main` folders (for example `src/androidMain`) hold
+  code compiled only for that platform.
+- The JS target exports TypeScript definitions for use in React apps. Build them with
+  `./gradlew :shared:jsBrowserProductionLibrary`, which writes
+  `shared/build/dist/js/productionLibrary/Box-shared.d.ts`.
